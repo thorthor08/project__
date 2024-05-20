@@ -74,15 +74,50 @@ def main():
         'Hour': hours,
         'Wave': waves
     })
-    wave_df=wave_df.iloc[0:64]
-    wave_df["day"]=" "
-    
+
+    # Create a list from the first item in each row and split each item
+    dates_list = []
+    final_wind_data={}
+    for i in range(wind_df.shape[0]):
+        row = wind_df.iloc[i]
+        dates_list.append(row['Date'].split(" "))
+
+    info_list = []
+    for i in range(wind_df.shape[0]):
+        row = wind_df.iloc[i]
+        info_list.append([row['Speed'], row["Gust"], row["Angle"]])
+
+    for date in dates_list:
+        if date[1] not in final_wind_data.keys():
+            final_wind_data[date[1]] = {}
+        final_wind_data[date[1]][date[0]] = {}
+
+    for i in info_list:
+        j = 0
+        while len(final_wind_data[dates_list[j][1]]) >= i:
+
+
+
+
+
+
+
+
+
+
+
+
     # Display data in tables
     st.header("Wind Data")
     st.table(wind_df)
 
     st.header("Wave Data")
     st.table(wave_df)
+
+    # Display the dates_list
+    st.write(final_wind_data)
+    st.write(info_list)
+
 
 if __name__ == "__main__":
     main()
