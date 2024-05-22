@@ -1,6 +1,6 @@
 import pandas as pd
-import streamlit as st
-import data_scraper
+import webbrowser
+import os
 
 # Read data from files with utf-8 encoding
 with open('dates.txt', 'r', encoding='utf-8') as file:
@@ -23,12 +23,8 @@ with open('hours.txt', 'r', encoding='utf-8') as file:
     hours = file.readlines()
 
 # Process data for wind data
-angles_values = []
-temp_values = []
-for i in angles:
-    angles_values.append(i)
-for i in temp:
-    temp_values.append(i + "°")
+angles_values = [angle.strip() for angle in angles]
+temp_values = [temp.strip() + "°" for temp in temp]
 
 speed_values = data[0].split(" ")
 gust_values = data[1].split(" ")
@@ -49,35 +45,30 @@ if len(gust_values) > len(speed_values):
 elif len(gust_values) < len(speed_values):
     gust_values += [''] * (len(speed_values) - len(gust_values))
 
+
+# Create DataFrame for wind data
+wind_df = pd.DataFrame({
+    'Date': dates,
+    'Speed': speed_values,
+    'Gust': gust_values,
+    'Angle': angles_values,
+    'Temperature': temp_values
+})
+
 # Process data for wave data
 hours = [hour.strip() for hour in hours]
 waves = [wave.strip() for wave in waves]
 
-# Main function to run the Streamlit app
+# Create DataFrame for wave data
+wave_df = pd.DataFrame({
+    'Hour': hours,
+    'Wave': waves
+})
+
 def main():
-    st.title("Thor Wind Website")
-
-    with st.spinner("Loading data..."):
-        import data_scraper
-
-    # Create DataFrame for wind data
-    wind_df = pd.DataFrame({
-        'Date': dates,
-        'Speed': speed_values,
-        'Gust': gust_values,
-        'Angle': angles_values,
-        'Temperature': temp_values
-    })
-
-    # Create DataFrame for wave data
-    wave_df = pd.DataFrame({
-        'Hour': hours,
-        'Wave': waves
-    })
-
     # Create a list from the first item in each row and split each item
     dates_list = []
-    final_wind_data={}
+    final_wind_data = {}
     for i in range(wind_df.shape[0]):
         row = wind_df.iloc[i]
         dates_list.append(row['Date'].split(" "))
@@ -87,37 +78,21 @@ def main():
         row = wind_df.iloc[i]
         info_list.append([row['Speed'], row["Gust"], row["Angle"]])
 
-    for date in dates_list:
-        if date[1] not in final_wind_data.keys():
-            final_wind_data[date[1]] = {}
-        final_wind_data[date[1]][date[0]] = {}
+    for date in range(len(dates_list)):
+        if dates_list[date][1] not in final_wind_data.keys():
+            final_wind_data[dates_list[date][1]] = {}
+        final_wind_data[dates_list[date][1]][dates_list[date][0]] = info_list[date]
 
-    for i in info_list:
-        j = 0
-        while len(final_wind_data[dates_list[j][1]]) >= i:
-
-
-
-
-
-
-
-
-
-
-
-
-    # Display data in tables
-    st.header("Wind Data")
-    st.table(wind_df)
-
-    st.header("Wave Data")
-    st.table(wave_df)
-
-    # Display the dates_list
-    st.write(final_wind_data)
-    st.write(info_list)
-
+    # Opening the HTML file in the default web browser
+    html_file_path = r'C:\Users\Magsihim_AI\Documents\GitHub\project__\home_page.html'  # Use a raw string
+    if os.path.exists(html_file_path):
+        webbrowser.open('file://' + os.path.realpath(html_file_path))
+    else:
+        print("Error: HTML file does not exist.")
 
 if __name__ == "__main__":
     main()
+
+
+
+

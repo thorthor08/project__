@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%; /* Use full height */
+        }
+        .navbar {
+            display: flex;
+            background-color: #00bcd4;
+            border-bottom: 1px solid #ccc; /* Border under the navbar */
+            padding: 0; /* Align titles at the top */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            height: 10vh; /* Titles take up top tenth of the screen */
+            overflow: hidden;
+            transition: height 0.5s ease; /* Smooth transition */
+            z-index: 1000;
+        }
+        .navbar.expanded {
+            height: 100vh; /* Expand to full viewport height */
+        }
+        .navbar div {
+            padding: 2px 10px; /* Smaller padding for titles */
+            text-align: center;
+            flex-grow: 1;
+            border-right: 1px solid #fff;
+            border-bottom: 3px solid black; /* Bold black line under titles */
+            box-sizing: border-box;
+            font-size: 14px; /* Adjust font size */
+        }
+        .navbar div:last-child {
+            border-right: none; /* Remove border from the last div */
+        }
+        .navbar .day {
+            flex: 0 0 8%; /* Adjust width for 'Day' */
+        }
+        .navbar div:not(.day) {
+            flex: 0 0 23%; /* Adjust width for other sections */
+        }
+        .expand-button {
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            width: 30px;
+            height: 30px;
+            background-color: #F3F5E6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 1s ease, height 1s ease;
+        }
+        .expand-button img {
+            width: 100%;
+            height: auto;
+        }
+        .content {
+            padding-top: 60px;
+            margin: 20px;
+            text-align: center;
+        }
+        /* Additional styling for dividing the screen into sections */
+        .expanded .content {
+            display: grid;
+            grid-template-rows: repeat(7, 1fr); /* Create 7 equal rows */
+            height: 90vh; /* Use remaining 90% of the height */
+            border-top: 0.2px solid black; /* Top border for division */
+        }
+
+        .bdr {
+            border: 3px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="day bdr">Day</div>
+        <div class="bdr">Wind</div>
+        <div class="bdr">Waves</div>
+        <div class="bdr">Weather</div>
+        <div class="bdr">Activity</div>
+        <div class="expand-button" onclick="toggleNavbar()">
+            <img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Expand" />
+        </div>
+    </div>
+    <div class="content">
+        <h1>Welcome to Your Dashboard</h1>
+        <p>Content will go here, replacing this placeholder text.</p>
+    </div>
+    <script>
+        function toggleNavbar() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('expanded');
+            const button = document.querySelector('.expand-button img');
+            button.style.transform = navbar.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+
+            const bdr = document.querySelectorAll('.bdr');
+            bdr.style.marginBottom = '20%';
+        }
+    </script>
+</body>
+</html>
+
+
+
