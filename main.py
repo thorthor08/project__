@@ -69,6 +69,7 @@ def main():
     # Create a list from the first item in each row and split each item
     dates_list = []
     final_wind_data = {}
+    #wind_df['hour']=wind_df.Date.str.split(' ')[0].
     for i in range(wind_df.shape[0]):
         row = wind_df.iloc[i]
         dates_list.append(row['Date'].split(" "))
@@ -77,7 +78,8 @@ def main():
     for i in range(wind_df.shape[0]):
         row = wind_df.iloc[i]
         info_list.append([row['Speed'], row["Gust"], row["Angle"]])
-
+    for i in range(len(dates_list)):
+        dates_list[i][0]=dates_list[i][0]
     for date in range(len(dates_list)):
         if dates_list[date][1] not in final_wind_data.keys():
             final_wind_data[dates_list[date][1]] = {}

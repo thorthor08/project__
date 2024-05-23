@@ -3,112 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>Expanding Navbar</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            height: 100%; /* Use full height */
-        }
-        .navbar {
-            display: flex;
-            background-color: #00bcd4;
-            border-bottom: 1px solid #ccc; /* Border under the navbar */
-            padding: 0; /* Align titles at the top */
-            position: fixed;
-            width: 100%;
-            top: 0;
-            height: 10vh; /* Titles take up top tenth of the screen */
-            overflow: hidden;
-            transition: height 0.5s ease; /* Smooth transition */
-            z-index: 1000;
-        }
-        .navbar.expanded {
-            height: 100vh; /* Expand to full viewport height */
-        }
-        .navbar div {
-            padding: 2px 10px; /* Smaller padding for titles */
-            text-align: center;
-            flex-grow: 1;
-            border-right: 1px solid #fff;
-            border-bottom: 3px solid black; /* Bold black line under titles */
             box-sizing: border-box;
-            font-size: 14px; /* Adjust font size */
+            font-family: 'Arial', sans-serif;
         }
-        .navbar div:last-child {
-            border-right: none; /* Remove border from the last div */
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #00bcd4;
+            color: white;
+            transition: height 0.5s ease, background-color 0.5s ease;
+            overflow: hidden;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .navbar .day {
-            flex: 0 0 8%; /* Adjust width for 'Day' */
+
+        #navbar.compact {
+            height: 20vh;
         }
-        .navbar div:not(.day) {
-            flex: 0 0 23%; /* Adjust width for other sections */
+
+        #navbar.expanded {
+            height: 100vh;
         }
-        .expand-button {
+
+        .nav-content {
+            display: grid;
+            grid-template-columns: 8% repeat(4, 23%);
+            gap: 2px;
+            height: 100%;
+        }
+
+        .category, .data {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .data.hidden {
+            display: none;
+        }
+
+        #toggleButton {
             position: absolute;
             right: 10px;
-            bottom: 5px;
+            bottom: 10px;
             width: 30px;
             height: 30px;
-            background-color: #F3F5E6;
+            background: white;
+            border: none;
             border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, bottom 0.5s ease;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: transform 1s ease, height 1s ease;
-        }
-        .expand-button img {
-            width: 100%;
-            height: auto;
-        }
-        .content {
-            padding-top: 60px;
-            margin: 20px;
-            text-align: center;
-        }
-        /* Additional styling for dividing the screen into sections */
-        .expanded .content {
-            display: grid;
-            grid-template-rows: repeat(7, 1fr); /* Create 7 equal rows */
-            height: 90vh; /* Use remaining 90% of the height */
-            border-top: 0.2px solid black; /* Top border for division */
         }
 
-        .bdr {
-            border: 3px solid black;
+        #toggleButton.expanded {
+            transform: rotate(180deg);
+            bottom: 10px;
+        }
+
+        #toggleButton img {
+            width: 15px;
+            height: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                grid-template-columns: 20% repeat(2, 40%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-content {
+                grid-template-columns: 30% 70%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="day bdr">Day</div>
-        <div class="bdr">Wind</div>
-        <div class="bdr">Waves</div>
-        <div class="bdr">Weather</div>
-        <div class="bdr">Activity</div>
-        <div class="expand-button" onclick="toggleNavbar()">
-            <img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Expand" />
+    <nav id="navbar" class="compact">
+        <div class="nav-content">
+            <div class="category">Day</div>
+            <div class="category">Wind Speed</div>
+            <div class="category">Waves</div>
+            <div class="category">Temperature</div>
+            <div class="category">Activity</div>
+            <div class="data">Day 1</div>
+            <div class="data">10 km/h</div>
+            <div class="data">3 ft</div>
+            <div class="data">20°C</div>
+            <div class="data">Running</div>
+            <div class="data hidden">Day 2</div>
+            <div class="data hidden">15 km/h</div>
+            <div class="data hidden">2 ft</div>
+            <div class="data hidden">22°C</div>
+            <div class="data hidden">Swimming</div>
+            <div class="data hidden">Day 3</div>
+            <div class="data hidden">5 km/h</div>
+            <div class="data hidden">1 ft</div>
+            <div class="data hidden">18°C</div>
+            <div class="data hidden">Walking</div>
+            <div class="data hidden">Day 4</div>
+            <div class="data hidden">20 km/h</div>
+            <div class="data hidden">4 ft</div>
+            <div class="data hidden">25°C</div>
+            <div class="data hidden">Cycling</div>
+            <div class="data hidden">Day 5</div>
+            <div class="data hidden">12 km/h</div>
+            <div class="data hidden">2 ft</div>
+            <div class="data hidden">19°C</div>
+            <div class="data hidden">Hiking</div>
+            <div class="data hidden">Day 6</div>
+            <div class="data hidden">8 km/h</div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">21°C</div>
+            <div class="data hidden">Surfing</div>
+            <div class="data hidden">Day 7</div>
+            <div class="data hidden">14 km/h</div>
+            <div class="data hidden">5 ft</div>
+            <div class="data hidden">23°C</div>
+            <div class="data hidden">Fishing</div>
         </div>
-    </div>
-    <div class="content">
-        <h1>Welcome to Your Dashboard</h1>
-        <p>Content will go here, replacing this placeholder text.</p>
-    </div>
+        <button id="toggleButton">
+            <img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Toggle">
+        </button>
+    </nav>
     <script>
-        function toggleNavbar() {
-            const navbar = document.querySelector('.navbar');
-            navbar.classList.toggle('expanded');
-            const button = document.querySelector('.expand-button img');
-            button.style.transform = navbar.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const toggleButton = document.getElementById('toggleButton');
+            const hiddenDataElements = document.querySelectorAll('.data.hidden');
 
-            const bdr = document.querySelectorAll('.bdr');
-            bdr.style.marginBottom = '20%';
-        }
+            toggleButton.addEventListener('click', function() {
+                if (navbar.classList.contains('compact')) {
+                    navbar.classList.remove('compact');
+                    navbar.classList.add('expanded');
+                    toggleButton.classList.add('expanded');
+                    hiddenDataElements.forEach(el => el.style.display = 'block');
+                } else {
+                    navbar.classList.remove('expanded');
+                    navbar.classList.add('compact');
+                    toggleButton.classList.remove('expanded');
+                    hiddenDataElements.forEach(el => el.style.display = 'none');
+                }
+            });
+        });
     </script>
 </body>
 </html>
-
-
-
