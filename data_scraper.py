@@ -62,16 +62,11 @@ def scrape_data(page_url):
 
     # Extract temperature
     temp_elements = driver.find_elements(By.CLASS_NAME, "trow.param.TMPE")
-    for category_group in category_groups:
+    for temp_element in temp_elements:
         try:
-            lines = category_group.text.split('\n')
-            for line in lines:
-                file.write(line + "\n")
+            temp_lines.append(temp_element.text.strip())
         except Exception as e:
-            print(f"Error: {e}")
-    with open('temp.txt', 'r') as a:
-        values = a.read().split()
-    temp_lines = list(map(str, values))
+            print(f"Error extracting temperature data: {e}")
 
     # Scrape data from the new webpage
     driver.get("https://gosurf.co.il/forecast/olga")

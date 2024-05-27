@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,6 @@
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
         }
-
         #navbar {
             position: fixed;
             top: 0;
@@ -23,22 +23,18 @@
             border-radius: 0 0 10px 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         #navbar.compact {
             height: 20vh;
         }
-
         #navbar.expanded {
             height: 100vh;
         }
-
         .nav-content {
             display: grid;
             grid-template-columns: 8% repeat(4, 23%);
             gap: 2px;
             height: 100%;
         }
-
         .category, .data {
             border: 1px solid white;
             padding: 10px;
@@ -46,11 +42,9 @@
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.2);
         }
-
         .data.hidden {
             display: none;
         }
-
         #toggleButton {
             position: absolute;
             right: 10px;
@@ -68,23 +62,19 @@
             align-items: center;
             justify-content: center;
         }
-
         #toggleButton.expanded {
             transform: rotate(180deg);
             bottom: 10px;
         }
-
         #toggleButton img {
             width: 15px;
             height: 15px;
         }
-
         @media (max-width: 768px) {
             .nav-content {
                 grid-template-columns: 20% repeat(2, 40%);
             }
         }
-
         @media (max-width: 480px) {
             .nav-content {
                 grid-template-columns: 30% 70%;
@@ -100,37 +90,37 @@
             <div class="category">Waves</div>
             <div class="category">Temperature</div>
             <div class="category">Activity</div>
-            <div class="data">Day 1</div>
+            <div class="data">Mo</div>
             <div class="data">10 km/h</div>
             <div class="data">3 ft</div>
             <div class="data">20°C</div>
             <div class="data">Running</div>
-            <div class="data hidden">Day 2</div>
+            <div class="data hidden">Tu</div>
             <div class="data hidden">15 km/h</div>
             <div class="data hidden">2 ft</div>
             <div class="data hidden">22°C</div>
             <div class="data hidden">Swimming</div>
-            <div class="data hidden">Day 3</div>
+            <div class="data hidden">We</div>
             <div class="data hidden">5 km/h</div>
             <div class="data hidden">1 ft</div>
             <div class="data hidden">18°C</div>
             <div class="data hidden">Walking</div>
-            <div class="data hidden">Day 4</div>
+            <div class="data hidden">Th</div>
             <div class="data hidden">20 km/h</div>
             <div class="data hidden">4 ft</div>
             <div class="data hidden">25°C</div>
             <div class="data hidden">Cycling</div>
-            <div class="data hidden">Day 5</div>
+            <div class="data hidden">Fr</div>
             <div class="data hidden">12 km/h</div>
             <div class="data hidden">2 ft</div>
             <div class="data hidden">19°C</div>
             <div class="data hidden">Hiking</div>
-            <div class="data hidden">Day 6</div>
+            <div class="data hidden">Sa</div>
             <div class="data hidden">8 km/h</div>
             <div class="data hidden">3 ft</div>
             <div class="data hidden">21°C</div>
             <div class="data hidden">Surfing</div>
-            <div class="data hidden">Day 7</div>
+            <div class="data hidden">Su</div>
             <div class="data hidden">14 km/h</div>
             <div class="data hidden">5 ft</div>
             <div class="data hidden">23°C</div>
@@ -145,7 +135,6 @@
             const navbar = document.getElementById('navbar');
             const toggleButton = document.getElementById('toggleButton');
             const hiddenDataElements = document.querySelectorAll('.data.hidden');
-
             toggleButton.addEventListener('click', function() {
                 if (navbar.classList.contains('compact')) {
                     navbar.classList.remove('compact');
@@ -163,3 +152,4 @@
     </script>
 </body>
 </html>
+    
