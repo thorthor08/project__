@@ -138,6 +138,21 @@ def home_page(final_wind_data):
             <div class="data hidden">5 ft</div>
             <div class="data hidden">23°C</div>
             <div class="data hidden">Fishing</div>
+            <div class="data hidden">{day8}</div>
+            <div class="data hidden">14 km/h</div>
+            <div class="data hidden">5 ft</div>
+            <div class="data hidden">23°C</div>
+            <div class="data hidden">Fishing</div>
+            <div class="data hidden">{day9}</div>
+            <div class="data hidden">14 km/h</div>
+            <div class="data hidden">5 ft</div>
+            <div class="data hidden">23°C</div>
+            <div class="data hidden">Fishing</div>
+            <div class="data hidden">{day10}</div>
+            <div class="data hidden">14 km/h</div>
+            <div class="data hidden">5 ft</div>
+            <div class="data hidden">23°C</div>
+            <div class="data hidden">Fishing</div>
         </div>
         <button id="toggleButton">
             <img src="C:\\Users\\Magsihim_AI\\Pictures\\arrow.png" alt="Toggle">
@@ -178,9 +193,12 @@ def main():
     new_dates = []
     final_wind_data = {}
     info_list = []
+    ten_days = []
 
+    #make a list of dates where each value contains of hour, day and date
     for i in dates:
         new_dates.append(i.split())
+        
     wind_speed=data[0].split()
     gust_speed=data[1].split()
     
@@ -193,20 +211,108 @@ def main():
             new_dates[i][0] = int(new_dates[i][0])
     print(len(new_dates))
     
+    #creates a list where each value contains the wind speed, gust speed, and angle
     for i in range(len(wind_speed)):
         info_list.append([wind_speed[i], gust_speed[i],angles[i]])
-    print(len(info_list))
-    print(info_list)
     
-    new_dates=new_dates[0:len(info_list)]
-    print(len(new_dates))
+    #take the first ten days from new_dates
+    count=0
+    ten_days=[]
     for i in range(len(new_dates)):
-            if new_dates[i][1] not in final_wind_data.keys():
-                final_wind_data[new_dates[i][1]] = {}
-            final_wind_data[new_dates[i][1]][new_dates[i][0]] = info_list[i]        
+        if i+1 < len(new_dates) and new_dates[i+1][1]!=new_dates[i][1]:
+            count+=1
+        ten_days.append(new_dates[i])
+        if count==10:
+            ten_days.append(new_dates[i+1])
+            break
+    print(len(ten_days))
     
+    switch_days=[]
+    for i in range(len(ten_days)-1):
+        if ten_days[i][1] != ten_days[i+1][1]:
+            switch_days.append(i)
+    print(switch_days)
+    
+    for i in switch_days:
+        ten_days[i+1][1]=ten_days[i][1]
+
+    #shorten the info list to the length of the ten_days list
+    info_list=info_list[:len(ten_days)]    
+        
+    for i in range(len(ten_days)):
+        if ten_days[i][1] =="Mo":
+            ten_days[i][1]="Monday"
+        elif ten_days[i][1] =="Tu":
+            ten_days[i][1]="Tuesday"
+        elif ten_days[i][1] =="We":
+            ten_days[i][1]="Wednesday"
+        elif ten_days[i][1] =="Th":
+            ten_days[i][1]="Thursday"
+        elif ten_days[i][1] =="Fr":
+            ten_days[i][1]="Friday"
+        elif ten_days[i][1] =="Sa":
+            ten_days[i][1]="Saturday"
+        elif ten_days[i][1] =="Su":
+            ten_days[i][1]="Sunday"
+            
+    
+    #seperate ten days into individual days
+    for i in range(len(ten_days) - 1):  # Subtract 1 to prevent IndexError
+        if ten_days[i+1][1] != ten_days[i][1]:
+            if ten_days[i][1] not in final_wind_data:
+                final_wind_data[ten_days[i][1]+" "+ten_days[i][2]] = []
+    final_wind_data[ten_days[-1][1]+" "+ten_days[-1][2]] = []
+
+    hours=[]
+    for i in ten_days:
+        hours.append(i[0])
+        
+    def split_list_by_indexes(main_list, indexes):
+    # Sort the indexes to ensure they are in ascending order
+        sorted_indexes = sorted(indexes)
+    
+    # Initialize the list to store the sublists
+        sublists = []
+    
+        previous_index = 0
+    
+        for index in sorted_indexes:
+            sublists.append(main_list[previous_index:index+2])
+            previous_index = index+2
+    
+        sublists.append(main_list[previous_index:])
+    
+        return sublists
+    
+    result = split_list_by_indexes(hours, switch_days)
+    result_info = split_list_by_indexes(info_list, switch_days)
+
+    print("this is the result")
+    print(result)
+    
+    for i in range(len(result)):
+        for j in range(len(result[i])):
+            result[i][j]=[result[i][j],result_info[i][j][0],result_info[i][j][1],result_info[i][j][2]] 
+    print("this is the result")
+    print(result)       
+    
+    #adds the list of hours and data into final wind data
+    for i in range(len(result)):
+        for j in range(len(result[i])):
+            final_wind_data[list(final_wind_data.keys())[i]].append(result[i][j])
 
 
+    
+    print("this is the final wind data")
+    print(final_wind_data)
+    #print("this is the info list")
+    #print(info_list)
+    #print(len(info_list))
+    #print("this is the ten days")
+    #print(final_wind_data)
+    #print(len(final_wind_data))
+        
+        
     html_content = home_page(final_wind_data).format(
         day1=list(final_wind_data.keys())[0],
         day2=list(final_wind_data.keys())[1],
@@ -214,8 +320,11 @@ def main():
         day4=list(final_wind_data.keys())[3],
         day5=list(final_wind_data.keys())[4],
         day6=list(final_wind_data.keys())[5],
-        day7=list(final_wind_data.keys())[6]
-    )
+        day7=list(final_wind_data.keys())[6],
+        day8=list(final_wind_data.keys())[7],
+        day9=list(final_wind_data.keys())[8],
+        day10=list(final_wind_data.keys())[9]
+)  
 
     html_file_path = 'home_page.html'
     with open(html_file_path, 'w', encoding='utf-8') as file:
@@ -227,7 +336,6 @@ def main():
     else:
         print("Error: HTML file does not exist.")
 
-    print(final_wind_data)
 
 if __name__ == "__main__":
     main()

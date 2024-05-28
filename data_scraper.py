@@ -64,11 +64,10 @@ def scrape_data(page_url):
     temp_elements = driver.find_elements(By.CLASS_NAME, "trow.param.TMPE")
     for temp_element in temp_elements:
         try:
-            temp_lines.append(temp_element.text.strip())
+            temp_lines.append(temp_element.text.split('\n')[0])
         except Exception as e:
             print(f"Error extracting temperature data: {e}")
 
-    # Scrape data from the new webpage
     driver.get("https://gosurf.co.il/forecast/olga")
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "waves")))
 
