@@ -1,6 +1,9 @@
 import pandas as pd
 import webbrowser
 import os
+import re
+import datetime
+
 
 def read_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -10,8 +13,46 @@ def process_wind_data(dates, data, angles, temp):
     angles_values = [angle.strip() for angle in angles]
     temp_values = [t.strip() + "°" for t in temp]
 
+def extract_number(string):
+    match = re.search(r'\d+', string)
+    if match:
+        return int(match.group())
+    return None
+
+
+def get_closest_rounded_hour():
+    now = datetime.datetime.now()
+    rounded_hour = round(now.hour + now.minute / 60)
+    return rounded_hour
+
 def home_page(final_wind_data):
-    html_content = """
+    def extract_number(cell_content):
+        import re
+        match = re.search(r'\d+', cell_content)
+        return int(match.group()) if match else 0
+
+    html_list = []
+    for key in final_wind_data:
+        html_table = ""
+        num_columns = len(final_wind_data[key])
+        for i in range(4):  # Create 4 rows
+            row_class = ' class="hours-row"' if i == 0 else ''
+            html_table += f"<tr{row_class}>"
+            first_cell_content = "Hours" if i == 0 else "Wind" if i == 1 else "Gust" if i == 2 else "Direction"
+            html_table += f'<td><span class="small-font">{first_cell_content}</span></td>'
+            for j in range(num_columns):  # Create num_columns additional columns
+                cell_content = final_wind_data[key][j][i] if j < num_columns else ''
+                if i == 0:  # Add "h" after every hour
+                    cell_content = f"{cell_content}h"
+                elif i == 3:
+                    degree = extract_number(cell_content)
+                    degree = degree % 360
+                    cell_content = f'<img src="C:\\Users\\Magsihim_AI\\Pictures\\arrow.png" alt="Arrow" style="transform: rotate({degree}deg); width:20px; height:20px;">'
+                html_table += f"<td>{cell_content}</td>"
+            html_table += "</tr>"
+        html_list.append(html_table)
+
+    html_content = f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,27 +65,27 @@ def home_page(final_wind_data):
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
+            height: 100%;
+            overflow: hidden;
         }}
         #navbar {{
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: #00bcd4;
+            background-color: #4293f5;
             color: white;
             transition: height 0.5s ease, background-color 0.5s ease;
             overflow: hidden;
             border-radius: 0 0 10px 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }}
-        #navbar.compact {{
-            height: 20vh;
+            height: 13vh;
         }}
         #navbar.expanded {{
             height: 100vh;
         }}
         .nav-content {{
             display: grid;
-            grid-template-columns: 8% repeat(4, 23%);
+            grid-template-columns: 8% repeat(3, 30%);
             gap: 2px;
             height: 100%;
         }}
@@ -83,14 +124,55 @@ def home_page(final_wind_data):
             width: 15px;
             height: 15px;
         }}
+        .nested-table {{
+            font-size: 1.1em;
+            border-spacing: 0;
+            padding: 10px;
+            width: 100%;
+            table-layout: fixed;
+        }}
+        .nested-table td {{
+            border: 1px solid #ddd;
+            padding: 5px;
+            word-wrap: break-word;
+        }}
+        .hidden {{
+            display: none;
+        }}
+        .small-font {{
+            font-size: 0.9em;
+        }}
+        .hours-row {{
+            background-color: black;
+        }}
+        .no-border {{
+            border: none !important;
+        }}
+        @media (max-width: 1200px) {{
+            body, html {{
+                font-size: 0.8em;
+            }}
+            .nested-table td {{
+                padding: 4px;
+            }}
+        }}
         @media (max-width: 768px) {{
-            .nav-content {{
-                grid-template-columns: 20% repeat(2, 40%);
+            body, html {{
+                font-size: 0.6em;
+            }}
+            .nested-table td {{
+                padding: 3px;
             }}
         }}
         @media (max-width: 480px) {{
+            body, html {{
+                font-size: 0.5em;
+            }}
             .nav-content {{
-                grid-template-columns: 30% 70%;
+                grid-template-columns: 40% 60%;
+            }}
+            .nested-table td {{
+                padding: 2px;
             }}
         }}
     </style>
@@ -101,87 +183,98 @@ def home_page(final_wind_data):
             <div class="category">Day</div>
             <div class="category">Wind Speed</div>
             <div class="category">Waves</div>
-            <div class="category">Temperature</div>
             <div class="category">Activity</div>
-            <div class="data">{day1}</div>
-            <div class="data">10 km/h</div>
-            <div class="data">3 ft</div>
-            <div class="data">20°C</div>
-            <div class="data">Running</div>
-            <div class="data hidden">{day2}</div>
-            <div class="data hidden">15 km/h</div>
-            <div class="data hidden">2 ft</div>
-            <div class="data hidden">22°C</div>
-            <div class="data hidden">Swimming</div>
-            <div class="data hidden">{day3}</div>
-            <div class="data hidden">5 km/h</div>
-            <div class="data hidden">1 ft</div>
-            <div class="data hidden">18°C</div>
-            <div class="data hidden">Walking</div>
-            <div class="data hidden">{day4}</div>
-            <div class="data hidden">20 km/h</div>
-            <div class="data hidden">4 ft</div>
-            <div class="data hidden">25°C</div>
-            <div class="data hidden">Cycling</div>
-            <div class="data hidden">{day5}</div>
-            <div class="data hidden">12 km/h</div>
-            <div class="data hidden">2 ft</div>
-            <div class="data hidden">19°C</div>
-            <div class="data hidden">Hiking</div>
-            <div class="data hidden">{day6}</div>
-            <div class="data hidden">8 km/h</div>
+            {"".join([f'''
+            <div class="data">{day}</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                {html_list[i]}
+                </table>
+            </div>
             <div class="data hidden">3 ft</div>
-            <div class="data hidden">21°C</div>
-            <div class="data hidden">Surfing</div>
-            <div class="data hidden">{day7}</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
-            <div class="data hidden">{day8}</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
-            <div class="data hidden">{day9}</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
-            <div class="data hidden">{day10}</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
+            <div class="data hidden">Running</div>
+            ''' for i, day in enumerate(final_wind_data.keys())])}
         </div>
         <button id="toggleButton">
             <img src="C:\\Users\\Magsihim_AI\\Pictures\\arrow.png" alt="Toggle">
         </button>
     </nav>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {{
-            const navbar = document.getElementById('navbar');
-            const toggleButton = document.getElementById('toggleButton');
-            const hiddenDataElements = document.querySelectorAll('.data.hidden');
-            toggleButton.addEventListener('click', function() {{
-                if (navbar.classList.contains('compact')) {{
-                    navbar.classList.remove('compact');
-                    navbar.classList.add('expanded');
-                    toggleButton.classList.add('expanded');
-                    hiddenDataElements.forEach(el => el.style.display = 'block');
-                }} else {{
-                    navbar.classList.remove('expanded');
-                    navbar.classList.add('compact');
-                    toggleButton.classList.remove('expanded');
-                    hiddenDataElements.forEach(el => el.style.display = 'none');
-                }}
-            }});
+document.addEventListener('DOMContentLoaded', function() {{
+    const navbar = document.getElementById('navbar');
+    const toggleButton = document.getElementById('toggleButton');
+    const dataElements = document.getElementsByClassName('data');
+    const hiddenDataElements = document.querySelectorAll('.data.hidden');
+
+    toggleButton.addEventListener('click', function() {{
+        if (navbar.classList.contains('compact')) {{
+            navbar.classList.remove('compact');
+            navbar.classList.add('expanded');
+            toggleButton.classList.add('expanded');
+            hiddenDataElements.forEach(el => el.style.display = 'block');
+        }} else {{
+            const nestedTables = document.querySelectorAll('.nested-table');
+            const placeholders = document.querySelectorAll('.placeholder');
+            nestedTables.forEach(table => table.style.display = 'none');
+            placeholders.forEach(placeholder => placeholder.style.display = 'block');
+            navbar.classList.remove('expanded');
+            navbar.classList.add('compact');
+            toggleButton.classList.remove('expanded');
+            hiddenDataElements.forEach(el => el.style.display = 'none');
+        }}
+    }});
+
+    for (var i = 0; i < dataElements.length; i++) {{
+        dataElements[i].addEventListener('click', function() {{
+            if (navbar.classList.contains('compact')) {{
+                return;
+            }}
+            var nestedTable = this.getElementsByClassName('nested-table')[0];
+            var placeholder = this.getElementsByClassName('placeholder')[0];
+            if (nestedTable.style.display === 'none') {{
+                nestedTable.style.display = 'table';
+                placeholder.style.display = 'none';
+            }} else {{
+                nestedTable.style.display = 'none';
+                placeholder.style.display = 'block';
+            }}
         }});
+    }}
+}});
+
+window.onload = function() {{
+    var cells = document.querySelectorAll('td');
+    for (var i = 0; i < cells.length; i++) {{
+        var cell = cells[i];
+        if (cell.parentNode.rowIndex == 1 || cell.parentNode.rowIndex == 2) {{
+            var value = parseFloat(cell.textContent);
+            if (!isNaN(value)) {{
+                if (value < 5) {{
+                    cell.style.backgroundColor = 'lightblue';
+                }} else if (value < 10) {{
+                    cell.style.backgroundColor = 'cyan';
+                }} else if (value < 13) {{
+                    cell.style.backgroundColor = 'lightgreen';
+                }} else if (value < 16) {{
+                    cell.style.backgroundColor = 'green';
+                }} else if (value < 20) {{
+                    cell.style.backgroundColor = 'yellow';
+                }} else if (value < 23) {{
+                    cell.style.backgroundColor = 'orange';
+                }} else {{
+                    cell.style.backgroundColor = 'red';
+                }}
+            }}
+        }}
+    }}
+}};
     </script>
 </body>
 </html>
     """
     return html_content
+
 
 def main():
     dates = read_file('dates.txt')
@@ -313,18 +406,7 @@ def main():
     #print(len(final_wind_data))
         
         
-    html_content = home_page(final_wind_data).format(
-        day1=list(final_wind_data.keys())[0],
-        day2=list(final_wind_data.keys())[1],
-        day3=list(final_wind_data.keys())[2],
-        day4=list(final_wind_data.keys())[3],
-        day5=list(final_wind_data.keys())[4],
-        day6=list(final_wind_data.keys())[5],
-        day7=list(final_wind_data.keys())[6],
-        day8=list(final_wind_data.keys())[7],
-        day9=list(final_wind_data.keys())[8],
-        day10=list(final_wind_data.keys())[9]
-)  
+    html_content = home_page(final_wind_data)
 
     html_file_path = 'home_page.html'
     with open(html_file_path, 'w', encoding='utf-8') as file:

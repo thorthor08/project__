@@ -11,27 +11,27 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
+            height: 100%;
+            overflow: hidden;
         }
         #navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: #00bcd4;
+            background-color: #4293f5;
             color: white;
             transition: height 0.5s ease, background-color 0.5s ease;
             overflow: hidden;
             border-radius: 0 0 10px 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        #navbar.compact {
-            height: 20vh;
+            height: 13vh;
         }
         #navbar.expanded {
             height: 100vh;
         }
         .nav-content {
             display: grid;
-            grid-template-columns: 8% repeat(4, 23%);
+            grid-template-columns: 8% repeat(3, 30%);
             gap: 2px;
             height: 100%;
         }
@@ -70,14 +70,55 @@
             width: 15px;
             height: 15px;
         }
+        .nested-table {
+            font-size: 1.1em;
+            border-spacing: 0;
+            padding: 10px;
+            width: 100%;
+            table-layout: fixed;
+        }
+        .nested-table td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            word-wrap: break-word;
+        }
+        .hidden {
+            display: none;
+        }
+        .small-font {
+            font-size: 0.9em;
+        }
+        .hours-row {
+            background-color: black;
+        }
+        .no-border {
+            border: none !important;
+        }
+        @media (max-width: 1200px) {
+            body, html {
+                font-size: 0.8em;
+            }
+            .nested-table td {
+                padding: 4px;
+            }
+        }
         @media (max-width: 768px) {
-            .nav-content {
-                grid-template-columns: 20% repeat(2, 40%);
+            body, html {
+                font-size: 0.6em;
+            }
+            .nested-table td {
+                padding: 3px;
             }
         }
         @media (max-width: 480px) {
+            body, html {
+                font-size: 0.5em;
+            }
             .nav-content {
-                grid-template-columns: 30% 70%;
+                grid-template-columns: 40% 60%;
+            }
+            .nested-table td {
+                padding: 2px;
             }
         }
     </style>
@@ -88,82 +129,182 @@
             <div class="category">Day</div>
             <div class="category">Wind Speed</div>
             <div class="category">Waves</div>
-            <div class="category">Temperature</div>
             <div class="category">Activity</div>
-            <div class="data">Tuesday 29.</div>
-            <div class="data">10 km/h</div>
-            <div class="data">3 ft</div>
-            <div class="data">20°C</div>
-            <div class="data">Running</div>
-            <div class="data hidden">Wednesday 30.</div>
-            <div class="data hidden">15 km/h</div>
-            <div class="data hidden">2 ft</div>
-            <div class="data hidden">22°C</div>
-            <div class="data hidden">Swimming</div>
-            <div class="data hidden">Thursday 31.</div>
-            <div class="data hidden">5 km/h</div>
-            <div class="data hidden">1 ft</div>
-            <div class="data hidden">18°C</div>
-            <div class="data hidden">Walking</div>
-            <div class="data hidden">Friday 1.</div>
-            <div class="data hidden">20 km/h</div>
-            <div class="data hidden">4 ft</div>
-            <div class="data hidden">25°C</div>
-            <div class="data hidden">Cycling</div>
-            <div class="data hidden">Saturday 2.</div>
-            <div class="data hidden">12 km/h</div>
-            <div class="data hidden">2 ft</div>
-            <div class="data hidden">19°C</div>
-            <div class="data hidden">Hiking</div>
-            <div class="data hidden">Sunday 3.</div>
-            <div class="data hidden">8 km/h</div>
+            
+            <div class="data">Thursday 31.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>6h</td><td>8h</td><td>10h</td><td>12h</td><td>14h</td><td>16h</td><td>18h</td><td>20h</td><td>22h</td></tr><tr><td><span class="small-font">Wind</span></td><td>3</td><td>4</td><td>7</td><td>9</td><td>10</td><td>11</td><td>10</td><td>7</td><td>6</td></tr><tr><td><span class="small-font">Gust</span></td><td>4</td><td>6</td><td>9</td><td>10</td><td>12</td><td>13</td><td>13</td><td>10</td><td>8</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(223deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(221deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(249deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(267deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(286deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(301deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(315deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(326deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(327deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
             <div class="data hidden">3 ft</div>
-            <div class="data hidden">21°C</div>
-            <div class="data hidden">Surfing</div>
-            <div class="data hidden">Monday 4.</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
-            <div class="data hidden">Tuesday 5.</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
-            <div class="data hidden">Wednesday 6.</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
-            <div class="data hidden">Thursday 7.</div>
-            <div class="data hidden">14 km/h</div>
-            <div class="data hidden">5 ft</div>
-            <div class="data hidden">23°C</div>
-            <div class="data hidden">Fishing</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Friday 1.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>5h</td><td>7h</td><td>9h</td><td>11h</td><td>13h</td><td>15h</td><td>17h</td><td>19h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>4</td><td>1</td><td>3</td><td>4</td><td>6</td><td>8</td><td>9</td><td>10</td><td>7</td><td>5</td></tr><tr><td><span class="small-font">Gust</span></td><td>5</td><td>3</td><td>3</td><td>5</td><td>7</td><td>10</td><td>12</td><td>12</td><td>10</td><td>7</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(327deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(163deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(160deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(260deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(283deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(298deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(313deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(320deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(325deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(333deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Saturday 2.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>5h</td><td>7h</td><td>9h</td><td>11h</td><td>13h</td><td>15h</td><td>17h</td><td>19h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>3</td><td>3</td><td>4</td><td>4</td><td>8</td><td>11</td><td>13</td><td>13</td><td>10</td><td>7</td></tr><tr><td><span class="small-font">Gust</span></td><td>4</td><td>3</td><td>5</td><td>5</td><td>11</td><td>15</td><td>17</td><td>17</td><td>15</td><td>10</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(72deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(94deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(67deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(338deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(327deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(328deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(333deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(339deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(343deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(346deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Sunday 3.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>5h</td><td>7h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>4</td><td>4</td><td>4</td><td>4</td><td>10</td><td>15</td><td>14</td><td>10</td></tr><tr><td><span class="small-font">Gust</span></td><td>6</td><td>6</td><td>6</td><td>5</td><td>11</td><td>18</td><td>20</td><td>14</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(355deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(8deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(37deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(358deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(332deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(344deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(349deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(352deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Monday 4.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>6h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>2</td><td>2</td><td>2</td><td>9</td><td>12</td><td>12</td><td>7</td></tr><tr><td><span class="small-font">Gust</span></td><td>5</td><td>4</td><td>4</td><td>9</td><td>16</td><td>17</td><td>9</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(359deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(83deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(317deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(309deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(335deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(338deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(318deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Tuesday 5.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>6h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>4</td><td>5</td><td>7</td><td>9</td><td>8</td><td>6</td><td>2</td></tr><tr><td><span class="small-font">Gust</span></td><td>5</td><td>6</td><td>8</td><td>9</td><td>10</td><td>9</td><td>3</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(196deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(183deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(210deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(256deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(284deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(301deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(259deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Wednesday 6.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>6h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>4</td><td>6</td><td>7</td><td>8</td><td>9</td><td>6</td><td>2</td></tr><tr><td><span class="small-font">Gust</span></td><td>5</td><td>7</td><td>8</td><td>9</td><td>11</td><td>8</td><td>3</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(191deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(183deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(216deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(250deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(278deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(298deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(264deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Thursday 7.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>6h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>4</td><td>5</td><td>5</td><td>8</td><td>8</td><td>6</td><td>3</td></tr><tr><td><span class="small-font">Gust</span></td><td>5</td><td>6</td><td>7</td><td>9</td><td>10</td><td>7</td><td>3</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(183deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(180deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(213deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(259deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(285deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(318deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(260deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Friday 8.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>6h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>3</td><td>5</td><td>8</td><td>10</td><td>9</td><td>7</td><td>4</td></tr><tr><td><span class="small-font">Gust</span></td><td>4</td><td>6</td><td>10</td><td>11</td><td>10</td><td>8</td><td>5</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(205deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(172deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(216deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(246deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(274deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(286deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(252deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
+            <div class="data">Saturday 9.</div>
+            <div class="data" colspan="2">
+                <div class="placeholder">Click to view details</div>
+                <table class="nested-table hidden">
+                <tr class="hours-row"><td><span class="small-font">Hours</span></td><td>3h</td><td>6h</td><td>9h</td><td>12h</td><td>15h</td><td>18h</td><td>21h</td></tr><tr><td><span class="small-font">Wind</span></td><td>6</td><td>7</td><td>9</td><td>10</td><td>10</td><td>7</td><td>2</td></tr><tr><td><span class="small-font">Gust</span></td><td>7</td><td>10</td><td>10</td><td>10</td><td>10</td><td>8</td><td>3</td></tr><tr><td><span class="small-font">Direction</span></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(206deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(199deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(216deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(247deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(272deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(288deg); width:20px; height:20px;"></td><td><img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Arrow" style="transform: rotate(279deg); width:20px; height:20px;"></td></tr>
+                </table>
+            </div>
+            <div class="data hidden">3 ft</div>
+            <div class="data hidden">Running</div>
+            
         </div>
         <button id="toggleButton">
             <img src="C:\Users\Magsihim_AI\Pictures\arrow.png" alt="Toggle">
         </button>
     </nav>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navbar = document.getElementById('navbar');
-            const toggleButton = document.getElementById('toggleButton');
-            const hiddenDataElements = document.querySelectorAll('.data.hidden');
-            toggleButton.addEventListener('click', function() {
-                if (navbar.classList.contains('compact')) {
-                    navbar.classList.remove('compact');
-                    navbar.classList.add('expanded');
-                    toggleButton.classList.add('expanded');
-                    hiddenDataElements.forEach(el => el.style.display = 'block');
-                } else {
-                    navbar.classList.remove('expanded');
-                    navbar.classList.add('compact');
-                    toggleButton.classList.remove('expanded');
-                    hiddenDataElements.forEach(el => el.style.display = 'none');
-                }
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('navbar');
+    const toggleButton = document.getElementById('toggleButton');
+    const dataElements = document.getElementsByClassName('data');
+    const hiddenDataElements = document.querySelectorAll('.data.hidden');
+
+    toggleButton.addEventListener('click', function() {
+        if (navbar.classList.contains('compact')) {
+            navbar.classList.remove('compact');
+            navbar.classList.add('expanded');
+            toggleButton.classList.add('expanded');
+            hiddenDataElements.forEach(el => el.style.display = 'block');
+        } else {
+            const nestedTables = document.querySelectorAll('.nested-table');
+            const placeholders = document.querySelectorAll('.placeholder');
+            nestedTables.forEach(table => table.style.display = 'none');
+            placeholders.forEach(placeholder => placeholder.style.display = 'block');
+            navbar.classList.remove('expanded');
+            navbar.classList.add('compact');
+            toggleButton.classList.remove('expanded');
+            hiddenDataElements.forEach(el => el.style.display = 'none');
+        }
+    });
+
+    for (var i = 0; i < dataElements.length; i++) {
+        dataElements[i].addEventListener('click', function() {
+            if (navbar.classList.contains('compact')) {
+                return;
+            }
+            var nestedTable = this.getElementsByClassName('nested-table')[0];
+            var placeholder = this.getElementsByClassName('placeholder')[0];
+            if (nestedTable.style.display === 'none') {
+                nestedTable.style.display = 'table';
+                placeholder.style.display = 'none';
+            } else {
+                nestedTable.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
         });
+    }
+});
+
+window.onload = function() {
+    var cells = document.querySelectorAll('td');
+    for (var i = 0; i < cells.length; i++) {
+        var cell = cells[i];
+        if (cell.parentNode.rowIndex == 1 || cell.parentNode.rowIndex == 2) {
+            var value = parseFloat(cell.textContent);
+            if (!isNaN(value)) {
+                if (value < 5) {
+                    cell.style.backgroundColor = 'lightblue';
+                } else if (value < 10) {
+                    cell.style.backgroundColor = 'cyan';
+                } else if (value < 13) {
+                    cell.style.backgroundColor = 'lightgreen';
+                } else if (value < 16) {
+                    cell.style.backgroundColor = 'green';
+                } else if (value < 20) {
+                    cell.style.backgroundColor = 'yellow';
+                } else if (value < 23) {
+                    cell.style.backgroundColor = 'orange';
+                } else {
+                    cell.style.backgroundColor = 'red';
+                }
+            }
+        }
+    }
+};
     </script>
 </body>
 </html>
